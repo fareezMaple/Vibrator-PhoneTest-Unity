@@ -15,11 +15,6 @@ public class GameManager : MonoBehaviour
     public Text text4;
     #endregion
 
-    #region Slider varible declaration
-    public Slider slider;
-    public Text millisTextSlider;
-    #endregion
-
     #region STARTING GAME
 
     private void Start()
@@ -56,13 +51,20 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Slider Vibrator Function
-    [Header("SLider panel")]
+    [Header("Slider panel")]
     public float VibrationToBeApplied = 800f;
     private bool isSnapToTenMs = true;
+    public Slider slider;
+    public Text millisTextSlider;
+    public GameObject warningText;
     public void updateValue()
     {
         float value = slider.value * 1000; //in millis
-        //Debug.Log(value);
+        if (value < 30)
+            warningText.SetActive(true);
+        else
+            warningText.SetActive(false);
+
         float truncatedValue = Mathf.Round(value);
 
         if (isSnapToTenMs)
@@ -94,7 +96,7 @@ public class GameManager : MonoBehaviour
      */
     #endregion
     
-    public void TestVibration()
+    /*public void TestVibration()
     {
         Vibration.Vibrate(500);
     }
@@ -102,7 +104,7 @@ public class GameManager : MonoBehaviour
     public void TestVibration(int millis)
     {
         Vibration.Vibrate(millis);
-    }
+    }*/
 
     #region Predefined effect
 
@@ -151,6 +153,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    #endregion
+	#endregion
+
+	#region Vibrate amplitude
+
+    public void runVibrate()
+    {
+        Vibration.Vibrate(500, 30); //millis and amp
+    }
+
+	#endregion
 }
 

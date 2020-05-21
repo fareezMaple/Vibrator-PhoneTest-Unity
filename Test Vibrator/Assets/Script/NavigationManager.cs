@@ -33,23 +33,11 @@ public class NavigationManager : MonoBehaviour
     public void ViewThreadSource()
     {
         //open web browser view github
-        Application.OpenURL("https://gist.github.com/aVolpe/707c8cf46b1bb8dfb363");
+        Application.OpenURL("https://gist.github.com/ruzrobert/d98220a3b7f71ccc90403e041967c46b"); //updated one
     }
 
     public void ignoreWarning()
     {
         warningPredefinedPanel.SetActive(false);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
