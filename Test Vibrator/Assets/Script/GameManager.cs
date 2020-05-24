@@ -95,7 +95,7 @@ public class GameManager : MonoBehaviour
      * -Boleh letak message mengatakan if below <30, phone tk support
      */
     #endregion
-    
+
     /*public void TestVibration()
     {
         Vibration.Vibrate(500);
@@ -106,9 +106,49 @@ public class GameManager : MonoBehaviour
         Vibration.Vibrate(millis);
     }*/
 
-    #region Predefined effect
+    #region Vibrate amplitude
+    [Header("Amplitude panel")]
+    public Slider sliderAmp;
+    public Text ampTextSlider;
+    private int AmplitudeToBeApplied;
+    private bool isSnapToTenMsAmp = false;
+    
+    public void updateValueAmp()
+    {
+        int valueAmp = (int) sliderAmp.value;
 
-    [Header("Predefined panel")]
+        if (isSnapToTenMsAmp)
+        {
+            int newVal = IntRoundExtension.RoundOff(valueAmp);
+            Debug.Log("is snap is called");
+            newVal = Mathf.Clamp(newVal, 0, 255);
+            ampTextSlider.text = newVal + " Unit";
+            AmplitudeToBeApplied = newVal;
+        }
+        else //isSnap is off
+        {
+            ampTextSlider.text = valueAmp + " Unit";
+            Debug.Log("is snap OFF is called");
+            AmplitudeToBeApplied = valueAmp;
+        }
+
+    }
+
+    public void SnapTo10msAmp(bool status)
+    {
+        isSnapToTenMsAmp = status;
+    }
+
+    public void ApplyVibrationAmp()
+    {
+        Vibration.Vibrate((long)VibrationToBeApplied, AmplitudeToBeApplied);
+        Debug.Log("Vibration applied: " + VibrationToBeApplied + " with amplitude " + AmplitudeToBeApplied);
+    }
+	#endregion
+
+	#region Predefined effect
+
+	[Header("Predefined panel")]
     public GameObject WarningPanel;
 
     public void PredefinedSelect(int i)
@@ -155,13 +195,5 @@ public class GameManager : MonoBehaviour
 
 	#endregion
 
-	#region Vibrate amplitude
-
-    public void runVibrate()
-    {
-        Vibration.Vibrate(500, 30); //millis and amp
-    }
-
-	#endregion
 }
 
