@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
             VibrationToBeApplied = truncatedValue;
         }
 
+        updateButtonRunAmp((int)VibrationToBeApplied);
     }
 
     public void SnapTo10ms(bool status)
@@ -110,8 +111,10 @@ public class GameManager : MonoBehaviour
     [Header("Amplitude panel")]
     public Slider sliderAmp;
     public Text ampTextSlider;
-    private int AmplitudeToBeApplied;
+    public Text buttonText;
+    private int AmplitudeToBeApplied = 255;
     private bool isSnapToTenMsAmp = false;
+    public GameObject warningAmpPanel;
     
     public void updateValueAmp()
     {
@@ -120,7 +123,6 @@ public class GameManager : MonoBehaviour
         if (isSnapToTenMsAmp)
         {
             int newVal = IntRoundExtension.RoundOff(valueAmp);
-            Debug.Log("is snap is called");
             newVal = Mathf.Clamp(newVal, 0, 255);
             ampTextSlider.text = newVal + " Unit";
             AmplitudeToBeApplied = newVal;
@@ -128,10 +130,15 @@ public class GameManager : MonoBehaviour
         else //isSnap is off
         {
             ampTextSlider.text = valueAmp + " Unit";
-            Debug.Log("is snap OFF is called");
             AmplitudeToBeApplied = valueAmp;
         }
 
+        updateButtonRunAmp((int)VibrationToBeApplied, AmplitudeToBeApplied);
+    }
+
+    public void updateButtonRunAmp(int ms, int amp = 255)
+    {
+        buttonText.text = "RUN " + ms + " ms" + " AND AMPLITUDE " + amp;
     }
 
     public void SnapTo10msAmp(bool status)
@@ -187,10 +194,15 @@ public class GameManager : MonoBehaviour
         int currentApi = Vibration.GetApiLevel();
         int minApiRequired = 29;
 
+        bool supportAmplitude = Vibration.HasAmplitudeControl();
+
         if (currentApi < minApiRequired)
         {
             WarningPanel.SetActive(true);
         }
+
+        if (!supportAmplitude)
+            warningAmpPanel.SetActive(true);
     }
 
 	#endregion

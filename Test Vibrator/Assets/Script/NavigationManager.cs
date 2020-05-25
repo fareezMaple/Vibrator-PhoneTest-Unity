@@ -6,6 +6,7 @@ public class NavigationManager : MonoBehaviour
 {
     public GameObject InfoPanel;
     public GameObject warningPredefinedPanel;
+    public GameObject warningAmplitudePanel;
     public void quitGame()
     {
         Application.Quit();
@@ -39,5 +40,10 @@ public class NavigationManager : MonoBehaviour
     public void ignoreWarning()
     {
         warningPredefinedPanel.SetActive(false);
+    }
+
+    public void ignoreWarningAmplitude()
+    {
+        warningAmplitudePanel.SetActive(false);
     }
 }
