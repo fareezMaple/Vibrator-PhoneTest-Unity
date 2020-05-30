@@ -37,6 +37,12 @@ public class NavigationManager : MonoBehaviour
         Application.OpenURL("https://gist.github.com/ruzrobert/d98220a3b7f71ccc90403e041967c46b"); //updated one
     }
 
+    public void OpenSupportEmail()
+    {
+        //open email
+        Application.OpenURL("mailto:foxtrotiqmal3@gmail.com");
+    }
+
     public void ignoreWarning()
     {
         warningPredefinedPanel.SetActive(false);
